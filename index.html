@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קוויז | מבוא להגנת סייבר ואבטחת מידע</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap');
+        
+        :root {
+            --primary: #0ea5e9;
+        }
+        
+        body {
+            font-family: 'Assistant', system-ui, -apple-system, sans-serif;
+        }
+        
+        .quiz-container {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+        
+        .option-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        
+        .option-btn.correct {
+            background-color: #166534 !important;
+            border-color: #4ade80 !important;
+            color: white;
+        }
+        
+        .option-btn.wrong {
+            background-color: #991b1b !important;
+            border-color: #f87171 !important;
+            color: white;
+        }
+        
+        .option-btn:disabled {
+            cursor: default;
+        }
+        
+        .question-card {
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        
+        .section-header {
+            background: linear-gradient(to right, #0ea5e9, #0284c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .progress-bar {
+            transition: width 0.4s ease;
+        }
+        
+        .feedback-box {
+            animation: fadeInUp 0.3s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .option-letter {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        
+        .quiz-shadow {
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+        
+        .nav-active {
+            background-color: #0ea5e9;
+            color: white;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Header -->
+    <div class="border-b border-zinc-800 bg-zinc-900">
+        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-11 h-11 bg-sky-500 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-white text-3xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight">קוויז סייבר</h1>
+                    <p class="text-zinc-400 text-sm">מבוא להגנת סייבר ואבטחת מידע</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-x-2 text-sm">
+                <div class="px-3 py-1.5 bg-zinc-900 border border-zinc-700 rounded-2xl flex items-center gap-x-2">
+                    <i class="fa-solid fa-graduation-cap text-sky-400"></i>
+                    <span class="font-medium">80+ שאלות</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 pt-8 pb-16">
+        
+        <!-- START SCREEN -->
+        <div id="start-screen" class="quiz-container">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-zinc-900 border border-zinc-700 rounded-3xl mb-6">
+                    <i class="fa-solid fa-user-shield text-sky-400 text-5xl"></i>
+                </div>
+                <h2 class="text-5xl font-bold tracking-tighter mb-3">מוכן למבחן?</h2>
+                <p class="text-xl text-zinc-400 max-w-md mx-auto">בדוק את הידע שלך במבוא להגנת סייבר ואבטחת מידע</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 quiz-shadow">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-5 text-center">
+                        <div class="text-sky-400 text-3xl font-bold mb-1">80+</div>
+                        <div class="text-sm text-zinc-400">שאלות</div>
+                    </div>
+                    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-5 text-center">
+                        <div class="text-emerald-400 text-3xl font-bold mb-1">4</div>
+                        <div class="text-sm text-zinc-400">אופציות לכל שאלה</div>
+                    </div>
+                    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-5 text-center">
+                        <div class="text-amber-400 text-3xl font-bold mb-1">∞</div>
+                        <div class="text-sm text-zinc-400">אפשרויות חזרה</div>
+                    </div>
+                </div>
+
+                <button onclick="startQuiz()" 
+                        class="w-full py-4 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 transition-all text-white text-xl font-semibold rounded-2xl flex items-center justify-center gap-x-3 shadow-lg shadow-sky-500/30">
+                    <span>התחל קוויז עכשיו</span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                
+                <p class="text-center text-xs text-zinc-500 mt-4">הקוויז כולל את כל השאלות מהמאגר הרשמי של הקורס • עובד מצוין בנייד</p>
+            </div>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div id="quiz-screen" class="quiz-container hidden">
+            <!-- Progress -->
+            <div class="flex items-center justify-between mb-4 px-1">
+                <div class="flex items-center gap-x-3">
+                    <div id="question-counter" 
+                         class="px-4 py-1.5 bg-zinc-900 border border-zinc-700 text-sm font-semibold rounded-2xl flex items-center gap-x-2">
+                        <span id="current-q">1</span>
+                        <span class="text-zinc-500">/</span>
+                        <span id="total-q" class="text-zinc-400"></span>
+                    </div>
+                    <div class="text-sm text-zinc-400 font-medium" id="score-display">ניקוד: <span class="font-bold text-emerald-400">0</span></div>
+                </div>
+                
+                <div class="w-40 bg-zinc-800 h-2.5 rounded-full overflow-hidden border border-zinc-700">
+                    <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-sky-400 to-emerald-400 w-0 rounded-full"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-7 md:p-9 quiz-shadow mb-6 question-card">
+                <div id="question-text" 
+                     class="text-2xl leading-tight font-semibold text-white mb-8 min-h-[80px]">
+                </div>
+
+                <!-- Options -->
+                <div id="options-container" class="space-y-3">
+                    <!-- JS injects buttons here -->
+                </div>
+
+                <!-- Feedback -->
+                <div id="feedback-container" class="hidden mt-6">
+                    <div id="feedback-box" 
+                         class="feedback-box border rounded-2xl p-5 text-sm">
+                        <!-- JS content -->
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <button onclick="showExplanation()" 
+                                class="flex-1 md:flex-none px-6 py-3 border border-zinc-600 hover:bg-zinc-800 transition-colors text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                            <i class="fa-solid fa-info-circle"></i>
+                            <span>הצג הסבר</span>
+                        </button>
+                        
+                        <button onclick="nextQuestion()" 
+                                class="flex-1 md:flex-none px-8 py-3 bg-white text-zinc-950 hover:bg-zinc-100 transition-all font-semibold rounded-2xl flex items-center justify-center gap-x-2 text-sm">
+                            <span id="next-btn-text">לשאלה הבאה</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- END SCREEN -->
+        <div id="end-screen" class="quiz-container hidden">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full mb-5">
+                    <i class="fa-solid fa-trophy text-4xl"></i>
+                </div>
+                <h2 class="text-4xl font-bold tracking-tight mb-2">סיימת את הקוויז!</h2>
+                <p class="text-zinc-400">הנה התוצאות שלך</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 md:p-10 quiz-shadow mb-6">
+                <div class="flex flex-col items-center">
+                    <div class="text-[92px] leading-none font-bold tabular-nums tracking-tighter" id="final-score">0</div>
+                    <div class="text-2xl text-zinc-400 -mt-2 mb-1">מתוך <span id="final-total">80</span></div>
+                    
+                    <div class="mt-2 mb-6">
+                        <div id="score-percentage" 
+                             class="inline-flex items-center px-5 py-1.5 rounded-2xl text-lg font-semibold bg-zinc-800 border border-zinc-700">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 text-center mb-8">
+                    <div>
+                        <div class="text-emerald-400 text-3xl font-bold" id="correct-count">0</div>
+                        <div class="text-xs text-zinc-500 tracking-wider">נכונות</div>
+                    </div>
+                    <div>
+                        <div class="text-red-400 text-3xl font-bold" id="wrong-count">0</div>
+                        <div class="text-xs text-zinc-500 tracking-wider">שגויות</div>
+                    </div>
+                    <div>
+                        <div class="text-amber-400 text-3xl font-bold" id="accuracy">0%</div>
+                        <div class="text-xs text-zinc-500 tracking-wider">דיוק</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="restartQuiz()" 
+                            class="flex-1 py-3.5 border border-zinc-600 hover:bg-zinc-800 active:bg-zinc-950 transition-colors font-semibold rounded-2xl flex items-center justify-center gap-x-2">
+                        <i class="fa-solid fa-redo"></i>
+                        <span>התחל מחדש</span>
+                    </button>
+                    
+                    <button onclick="showReview()" 
+                            class="flex-1 py-3.5 bg-sky-500 hover:bg-sky-600 transition-all text-white font-semibold rounded-2xl flex items-center justify-center gap-x-2">
+                        <span>סקירת תשובות שגויות</span>
+                    </button>
+                </div>
+            </div>
+            
+            <p class="text-center text-xs text-zinc-500">הקוויז מבוסס על מאגר השאלות הרשמי של הקורס • בהצלחה בלימודים!</p>
+        </div>
+
+    </div>
+
+    <!-- Explanation Modal -->
+    <div id="explanation-modal" onclick="hideExplanation()" class="hidden fixed inset-0 bg-black/70 flex items-end md:items-center justify-center z-50">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="bg-zinc-900 border border-zinc-700 w-full md:w-[520px] md:rounded-3xl md:m-4 rounded-t-3xl p-6">
+            <div class="flex justify-between items-center mb-4">
+                <div class="font-semibold text-lg flex items-center gap-x-2">
+                    <i class="fa-solid fa-lightbulb text-amber-400"></i>
+                    <span>הסבר</span>
+                </div>
+                <button onclick="hideExplanation()" class="text-zinc-400 hover:text-white w-9 h-9 flex items-center justify-center">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="explanation-content" class="text-zinc-300 leading-relaxed text-[15px]">
+                <!-- JS injected -->
+            </div>
+            <button onclick="hideExplanation()" 
+                    class="mt-6 w-full py-3 bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-2xl text-sm font-medium">
+                סגור
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#0ea5e9');
+        }
+        
+        // All questions from the official file - parsed exactly as provided
+        const questions = [
+            {
+                id: 1,
+                q: "RBAC ?",
+                options: [
+                    { letter: "א", text: "Role Backup authorization code", correct: false },
+                    { letter: "ב", text: "Risk building access control", correct: false },
+                    { letter: "ג", text: "Role-based access control", correct: true },
+                    { letter: "ד", text: "Ram boot access control", correct: false }
+                ],
+                explanation: "RBAC = Role-based access control – בקרת גישה מבוססת תפקידים. זהו מושג מרכזי בניהול הרשאות בארגונים."
+            },
+            {
+                id: 2,
+                q: "מה נחשב לפגיעה בינונית של אירוע סייבר ?",
+                options: [
+                    { letter: "א", text: "השבתת אתר אינטרנט ואובדן הכנסות של 3 ימים", correct: true },
+                    { letter: "ב", text: "ו'שה להוציא דוחות מכירה BI -כריית מטבעות קריפטו מאיטות את מערכת ה", correct: false },
+                    { letter: "ג", text: "שינוי נתוני אלרגיה של חולה בתיק רפואי", correct: false },
+                    { letter: "ד", text: "פגיעה בבקר מים והזרמת כלור למערכת מי שתיה", correct: false }
+                ],
+                explanation: "פגיעה בינונית כוללת השבתת שירותים עסקיים משמעותיים עם אובדן הכנסות של מספר ימים. פגיעה קריטית כוללת סיכון חיים או נזק פיזי חמור."
+            },
+            {
+                id: 3,
+                q: "מה לא נכלל בסיכוני סייבר בהתקנת תוכנת \"מדף\" בארגון ?",
+                options: [
+                    { letter: "א", text: "בחינת סיכוני API וקישורים שיש לתוכנה עם תוכנות אחרות", correct: false },
+                    { letter: "ב", text: "מיקום שימור קבצים שמשמשים כקלט לתוכנה", correct: false },
+                    { letter: "ג", text: "הדפסת תכנים על המסך", correct: true },
+                    { letter: "ד", text: "קישור התוכנה לבסיסי הנתונים", correct: false }
+                ],
+                explanation: "הדפסת תכנים על המסך אינה סיכון סייבר ישיר בהקשר של התקנת תוכנה. הסיכונים העיקריים הם API, קבצים, בסיסי נתונים ותקשורת."
+            },
+            {
+                id: 4,
+                q: "מי לא כלול בקבוצות \"שחקנים\" בתקיפות סייבר?",
+                options: [
+                    { letter: "א", text: "האקרים אקטיבסטים", correct: false },
+                    { letter: "ב", text: "ריגול מסחרי", correct: false },
+                    { letter: "ג", text: "מדינות ככלי לריגול וגרימת נזק למדינת אויב", correct: false },
+                    { letter: "ד", text: "תווך לארגון פעילות פוליטית", correct: true }
+                ],
+                explanation: "השחקנים העיקריים בתקיפות סייבר הם האקטיביסטים, ריגול תעשייתי ומדינות. \"תווך לארגון פעילות פוליטית\" אינו שחקן סטנדרטי בקטגוריה זו."
+            },
+            {
+                id: 5,
+                q: "Active Directory GPO - means?",
+                options: [
+                    { letter: "א", text: "Group Public Objective", correct: false },
+                    { letter: "ב", text: "Government Policy", correct: false },
+                    { letter: "ג", text: "Gmail Policy Object", correct: false },
+                    { letter: "ד", text: "Group Policy Object", correct: true }
+                ],
+                explanation: "GPO = Group Policy Object – אובייקט מדיניות קבוצתית ב-Active Directory."
+            },
+            {
+                id: 6,
+                q: "DIRECTORY ACTIVE מה לא כלול בהקשחת ?",
+                options: [
+                    { letter: "א", text: "Restrict Software Installations", correct: false },
+                    { letter: "ב", text: "Disable all Users", correct: true },
+                    { letter: "ג", text: "Set Minimum Password Length to Higher Limits", correct: false },
+                    { letter: "ד", text: "Disable Guest Account", correct: false }
+                ],
+                explanation: "Disable all Users אינו חלק מהקשחת Active Directory. ההקשחה כוללת הגבלת התקנות, סיסמאות חזקות והשבתת חשבון Guest."
+            },
+            {
+                id: 7,
+                q: "KEYLOGGER?",
+                options: [
+                    { letter: "א", text: "החלפת מפתחות הצפנה בין שני ארגונים", correct: false },
+                    { letter: "ב", text: "תקיפה שבה מקליטים הקשות מקלדת", correct: true },
+                    { letter: "ג", text: "תקיפת סייבר - גניבת מפתחות הצפנה", correct: false },
+                    { letter: "ד", text: "חיפוש לפי מתפתח בתוך לוגים בזמן תחקור מתקפת סייבר", correct: false }
+                ],
+                explanation: "Keylogger היא תקיפה שמקליטה הקשות מקלדת כדי לגנוב סיסמאות ומידע רגיש."
+            },
+            {
+                id: 8,
+                q: "SSO?",
+                options: [
+                    { letter: "א", text: "הרשאות למשתמש להריץ תוכנה אחת בו זמנית - Online Software Single", correct: false },
+                    { letter: "ב", text: "חיבור הזדהות אחת לכלל היישומים - Single Sign On", correct: true },
+                    { letter: "ג", text: "חיבור מאובטח בין שתי תוכנות - Object Solution Software", correct: false },
+                    { letter: "ד", text: "יישום שכבות הגנה על יישום תוכנה - ON Structure Security", correct: false }
+                ],
+                explanation: "SSO = Single Sign-On – הזדהות אחת לכלל המערכות והיישומים בארגון."
+            },
+            {
+                id: 9,
+                q: "LEAST Privilege ?",
+                options: [
+                    { letter: "א", text: "מושג מוביל בהרשאות - מתן מינימום הרשאות לעובד למילוי תפקידו", correct: true },
+                    { letter: "ב", text: "DIRECTORY ACTIVE - מושג מעולם ההרשאות - חיבור תשתית הרשאות ל", correct: false },
+                    { letter: "ג", text: "חיבור מערך ההרשאות לכלל האפליקציות הארגוניות", correct: false },
+                    { letter: "ד", text: "רשימת הרשאות מותרת לכל עובד", correct: false }
+                ],
+                explanation: "Least Privilege – עקרון מתן ההרשאות המינימליות הנדרשות לביצוע התפקיד בלבד."
+            },
+            {
+                id: 10,
+                q: "ההזדהות בעולם MULTI FACTOR AUTHENTICATION ?",
+                options: [
+                    { letter: "א", text: "ירוק וכחול נכונים", correct: false },
+                    { letter: "ב", text: "Something you KNOW, you DID, you HOLD", correct: false },
+                    { letter: "ג", text: "Something you GET, you ARE, you DO", correct: false },
+                    { letter: "ד", text: "Something you KNOW, you ARE, you HAVE", correct: true }
+                ],
+                explanation: "MFA מבוסס על שלושה גורמים: Something you know (סיסמה), Something you are (ביומטריה), Something you have (טלפון/אסימון)."
+            },
+            {
+                id: 11,
+                q: "... בבדיקת קלט בכתיבת תוכנה לא צריך להקפיד על ?",
+                options: [
+                    { letter: "א", text: "אורך המחרוזת של הקלט", correct: false },
+                    { letter: "ב", text: "בקלט של כתובת מגורים יש להקפיד על קלט של אותיות וספרות", correct: false },
+                    { letter: "ג", text: "בשדה של תעודת זהות - קלט של ספרות בלבד", correct: false },
+                    { letter: "ד", text: "OPENSOURCE -אין להשתמש בפיתוח תוכנה ב", correct: true }
+                ],
+                explanation: "יש להקפיד תמיד על בדיקת קלט (input validation). השימוש ב-Open Source אינו קשור ישירות לבדיקת קלט."
+            },
+            {
+                id: 12,
+                q: "בתמונה המצורפת מתואר סיכון של תקיפה ?",
+                options: [
+                    { letter: "א", text: "Dll hijacking", correct: true },
+                    { letter: "ב", text: "Phishing Email", correct: false },
+                    { letter: "ג", text: "KeyLogger", correct: false },
+                    { letter: "ד", text: "BIOS תקיפת", correct: false }
+                ],
+                explanation: "השאלה מתייחסת לתמונה שצורפה במקור (שאינה זמינה כאן). התשובה הנכונה היא Dll hijacking – החלפת קובץ DLL זדוני."
+            },
+            {
+                id: 13,
+                q: "כדי להקשיח את התקשורת לשרת?",
+                options: [
+                    { letter: "א", text: "80PORT -לאפשר תקשורת רק ב", correct: false },
+                    { letter: "ב", text: "22PORT -לאפשר תקשורת רק לתחזוקה ב", correct: false },
+                    { letter: "ג", text: "הנדרשים PORTS -לאפשר תקשורת לפי הגדרת ה", correct: true },
+                    { letter: "ד", text: "PORTS -לנעול את כל ה", correct: false }
+                ],
+                explanation: "יש לאפשר רק את הפורטים הנדרשים (least privilege בתקשורת) ולא לפתוח את כל הפורטים."
+            },
+            {
+                id: 14,
+                q: "?מה הוא לא חלק מהקשחת מערכת הפעלה ?",
+                options: [
+                    { letter: "א", text: "DEFAULT שינוי סיסמאות וערכי", correct: false },
+                    { letter: "ב", text: "הגבילו התקנת תוכנות על מערכת ההפעלה", correct: false },
+                    { letter: "ג", text: "התקנת אנטי וירוס", correct: false },
+                    { letter: "ד", text: "תבודדו את המחשב ברשת ללא גישה לאינטרנט", correct: true }
+                ],
+                explanation: "בידוד מלא מהאינטרנט אינו חלק סטנדרטי מהקשחת מערכת הפעלה. ההקשחה כוללת שינוי סיסמאות ברירת מחדל, הגבלת תוכנות והתקנת אנטי-וירוס."
+            },
+            {
+                id: 15,
+                q: "בהתקנת תוכנה על מה לא צריך להגן ?",
+                options: [
+                    { letter: "א", text: "תחזוקת תוכנה ע\"י Administrator", correct: true },
+                    { letter: "ב", text: "FILES TEMPORARY הגנה על", correct: false },
+                    { letter: "ג", text: "בין תוכנות API ממשקי", correct: false },
+                    { letter: "ד", text: "תקשורת של התוכנה עם האינטרנט", correct: false }
+                ],
+                explanation: "יש להגן על קבצים זמניים, API ותקשורת. תחזוקה על ידי Administrator היא חלק נורמלי מהתהליך."
+            },
+            {
+                id: 16,
+                q: "בדיקת קלט לא תכלול את הנתונים הבאים ?",
+                options: [
+                    { letter: "א", text: "אורך המחרוזת", correct: false },
+                    { letter: "ב", text: "בדיקת טווח הקלט", correct: false },
+                    { letter: "ג", text: "בדיקת התאמת הקלט ל-פלט על המסך", correct: true },
+                    { letter: "ד", text: "האם הקלט עם מאפיינים מיוחדים כגון רק מספרים, רק אותיות", correct: false }
+                ],
+                explanation: "בדיקת קלט צריכה לכלול אורך, טווח ומאפיינים. בדיקת \"התאמה לפלט על המסך\" אינה חלק מבדיקת קלט תקינה."
+            },
+            {
+                id: 17,
+                q: "לבדיקות יש לשים לב התשובה הכי חשובה( TEST) כשמעתיקים מערכת ייצור לסביבת ?",
+                options: [
+                    { letter: "א", text: "שנתונים רגישים ממערכת הייצור יוסתרו", correct: true },
+                    { letter: "ב", text: "מסודר למניעת מתקפת סייבר LOG יהיה TEST -שלמערכת ה", correct: false },
+                    { letter: "ג", text: "שינוי סיסמאות של משתמשים", correct: false },
+                    { letter: "ד", text: "שמערכת ההפעלה תהיה מוקשחת", correct: false }
+                ],
+                explanation: "הדבר החשוב ביותר הוא להסתיר נתונים רגישים (PII, סיסמאות, כרטיסי אשראי) לפני העתקה לסביבת בדיקות."
+            },
+            {
+                id: 18,
+                q: "מה לא נחשב מתקפת סייבר על בסיסי נתונים?",
+                options: [
+                    { letter: "א", text: "שליפת מידע ע\"י משתמש לא מורשה", correct: false },
+                    { letter: "ב", text: "עיוות האפלקציה כך שתקרין נתונים לא נכונים", correct: true },
+                    { letter: "ג", text: "מחיקת טבלאות בבסיס הנתונים", correct: false },
+                    { letter: "ד", text: "שינוי מידע בתוך בסיס הנתונים", correct: false }
+                ],
+                explanation: "עיוות האפליקציה להצגת נתונים שגויים אינו תקיפה ישירה על בסיס הנתונים אלא על שכבת האפליקציה."
+            },
+            {
+                id: 19,
+                q: "אילו שדות לא צריך להצפין בבסיס נתונים ?",
+                options: [
+                    { letter: "א", text: "ספרות של כרטיס אשראי 16", correct: false },
+                    { letter: "ב", text: "שמות משתמשים", correct: true },
+                    { letter: "ג", text: "סיסמאות משתמשים", correct: false },
+                    { letter: "ד", text: "נתונים הנוגעים לפרטיות כגון שם משפחה מצב משפחתי ומחלות בעבר", correct: false }
+                ],
+                explanation: "שמות משתמשים בדרך כלל אינם דורשים הצפנה (אלא אם כן מדובר במידע רגיש במיוחד). סיסמאות, כרטיסי אשראי ונתונים רפואיים חייבים הצפנה."
+            },
+            {
+                id: 20,
+                q: "?אין צורך לבדוק את TEST יש להתקין תחילה בסביבת PRODUCTION -כשמתקינים תוכנה ב",
+                options: [
+                    { letter: "א", text: "?DEFAULT האם יש סיסמאות", correct: false },
+                    { letter: "ב", text: "ERP -האם היא מבצעת תקשורת עם תוכנת ה", correct: false },
+                    { letter: "ג", text: "צריכת זיכרון של התוכנה", correct: false },
+                    { letter: "ד", text: "של התוכנה ותקשורת אל מחוץ לארגון CPU צריכת", correct: true }
+                ],
+                explanation: "בסביבת ייצור (Production) אין לבצע בדיקות TEST. יש לבדוק קודם בסביבות נפרדות."
+            },
+            {
+                id: 21,
+                q: "מהו השלב השלישי - ג' בתהליך אבטחת הסייבר?",
+                options: [
+                    { letter: "א", text: "ANALYSIS RISK + איסוף דרישות", correct: false },
+                    { letter: "ב", text: "תוכנה פיתוח + STATIC CODE ANALYSIS", correct: true },
+                    { letter: "ג", text: "ANALYSIS RISK + כתיבת מפרט דרישות", correct: false },
+                    { letter: "ד", text: "PT עליה לייצור וביצוע", correct: false }
+                ],
+                explanation: "השלבים הטיפוסיים: איסוף דרישות → ניתוח סיכונים → פיתוח + Static Code Analysis → בדיקות דינמיות + PT → עלייה לייצור."
+            },
+            {
+                id: 22,
+                q: "הארגון צריך לדאוג לאבטחת מידע בתחום SAAS במודל ?",
+                options: [
+                    { letter: "א", text: "כל האחריות היא על ספק הענן והארגון פטור מניהול אבטחת מידע", correct: false },
+                    { letter: "ב", text: "הארגון חייב להתקין את מערכת האנטיוירוס הארגונית על יישום הענן", correct: false },
+                    { letter: "ג", text: "במודל זה הארגון צריך להגדיר תצורת הזדהות , הרשאות גישה למידע", correct: true },
+                    { letter: "ד", text: "צריך לאבטח את התקשורת בין שרתי בסיסי הנתונים לשרתי האפליקציה", correct: false }
+                ],
+                explanation: "במודל SaaS הארגון אחראי על הזדהות, הרשאות וגישה למידע. הספק אחראי על התשתית."
+            },
+            {
+                id: 23,
+                q: "היכן לא נמקם מערכות צילום?",
+                options: [
+                    { letter: "א", text: "בחדרי העבודה של האנשים למניעת גניבת נכסים מהארגון", correct: true },
+                    { letter: "ב", text: "בכניסה לחדרי מחשב לניטור כניסה בלתי מורשית", correct: false },
+                    { letter: "ג", text: "בכניסה לארגון ונדווח שהמקום מצולם", correct: false },
+                    { letter: "ד", text: "הגנה היקפית על המבנה", correct: false }
+                ],
+                explanation: "הצבת מצלמות בחדרי עבודה פרטיים של עובדים עלולה לפגוע בפרטיות ואינה מומלצת."
+            },
+            {
+                id: 24,
+                q: "CLOUD HYBRID -על מה לא נצטרך להגן ב?",
+                options: [
+                    { letter: "א", text: "על התשתית הוירטואלית בארגון", correct: false },
+                    { letter: "ב", text: "על סינון ובחינת מהימנות של עובדי הארגון", correct: false },
+                    { letter: "ג", text: "על סינון וסיווג עובדי הענן הציבורי", correct: true },
+                    { letter: "ד", text: "על תעבורת המידע בין הענן הפרטי לענן הציבורי", correct: false }
+                ],
+                explanation: "ב-Hybrid Cloud הארגון אחראי על הענן הפרטי והתקשורת. סינון עובדי ספק הענן הציבורי הוא באחריות הספק."
+            },
+            {
+                id: 25,
+                q: "איזה משפט איננו נכון?",
+                options: [
+                    { letter: "א", text: "כשמורידים עדכונים למערכות הפעלה יש לוודא את האתר ממנו מורידים את התוכנה", correct: false },
+                    { letter: "ב", text: "שלא יוחלפו WINDOWS הגנה על קבצי ספריות של", correct: false },
+                    { letter: "ג", text: "PATCHES אין צורך בהתקנת TEST PENETRATION -לאחר התקנת מערכת הפעלה שנבדקה ב", correct: true },
+                    { letter: "ד", text: "מורשים יבוצעו עם המחשב PORTS -יש להגן ולוודא שרק תעבורה מותרת ב", correct: false }
+                ],
+                explanation: "גם אחרי בדיקת Patch בסביבת Test, מומלץ לבצע Penetration Test בסביבת ייצור לפני פריסה מלאה."
+            },
+            {
+                id: 26,
+                q: "?הארגון לא צריך לדאוג לאבטחת מידע בתחום IAAS במודל",
+                options: [
+                    { letter: "א", text: "להתקנת החומרה בארון מוגן", correct: true },
+                    { letter: "ב", text: "של אבטחת מידע במערכת ההפעלה PATCHES להתקנת", correct: false },
+                    { letter: "ג", text: "למשאבי המחשוב ADMINISTRATOR להגדיר הזדהות לגישת", correct: false },
+                    { letter: "ד", text: "להגדרת ניתובים והגדרת גישה רשתית לשרתים", correct: false }
+                ],
+                explanation: "ב-IaaS הארגון אחראי על מערכת ההפעלה, תיקונים, הזדהות וגישה. התקנת החומרה הפיזית היא באחריות ספק הענן."
+            },
+            {
+                id: 27,
+                q: "מה לא יעלה לענן לפי הנחיות הגופים לשמירה על אבטחת המידע לענן ?",
+                options: [
+                    { letter: "א", text: "מידע פרטי שעלול לפגוע בפרטיות המשתמשים", correct: false },
+                    { letter: "ב", text: "מידע רפואי כמו תיק חולה שהינו רגיש", correct: false },
+                    { letter: "ג", text: "דו\"חות כספיים ומידע עסקי רגיש", correct: false },
+                    { letter: "ד", text: "מידע ביטחוני ברמת סיווג סודי", correct: true }
+                ],
+                explanation: "מידע ביטחוני מסווג (סודי ומעלה) בדרך כלל אסור להעלות לענן ציבורי ללא אישורים מיוחדים."
+            },
+            {
+                id: 28,
+                q: "PAYLOAD בווירוס - מה זה ?",
+                options: [
+                    { letter: "א", text: "החלק של התוכנה שגורם את הנזק", correct: true },
+                    { letter: "ב", text: "החלק בתוכנה שמתקשר עם התוקף", correct: false },
+                    { letter: "ג", text: "החלק בתוכנה שגורם להתפשטות הנוזקה", correct: false },
+                    { letter: "ד", text: "פתוחים במחשבים אחרים PORT החלק שסורק", correct: false }
+                ],
+                explanation: "Payload הוא החלק בווירוס/נוזקה שמבצע את הפעולה הזדונית (מחיקה, הצפנה, גניבה וכו')."
+            },
+            {
+                id: 29,
+                q: "הדור ה-שני של אנטי וירוס עובד על ?",
+                options: [
+                    { letter: "א", text: "HASH חתימות קבצים", correct: false },
+                    { letter: "ב", text: "התנהגות היוריסטית - לדוגמה מחיקות קבצים", correct: true },
+                    { letter: "ג", text: "מתקשר עם שרת מנהל - מדווח ומתבצעות קורלציות עם מחשבים אחרים", correct: false },
+                    { letter: "ד", text: "אף אחת מהתשובות לא נכונה", correct: false }
+                ],
+                explanation: "הדור השני של אנטי-וירוס משתמש ב-Heuristic / Behavior analysis לזיהוי נוזקות חדשות."
+            },
+            {
+                id: 30,
+                q: "באבטחה פיסית מה לא כלול במתודולוגיה?",
+                options: [
+                    { letter: "א", text: "מצלמות להגנה על חדרים רגישים", correct: false },
+                    { letter: "ב", text: "גריטה של ציוד מחשוב בתום שימוש", correct: false },
+                    { letter: "ג", text: "שמירה בכניסה לארגון", correct: false },
+                    { letter: "ד", text: "הגדרות גישה ב- חומת איש ארגונית לחסימת תעבורה של גורמים זדוניים", correct: true }
+                ],
+                explanation: "חומת אש ארגונית היא אבטחת סייבר (לוגית), לא אבטחה פיזית."
+            },
+            {
+                id: 31,
+                q: ".מה הוא צעד מספר 4 ותהליך אבטחת הסייבר ב- ד",
+                options: [
+                    { letter: "א", text: "ASSESEMENT RISK קבלת דרישות וביצוע", correct: false },
+                    { letter: "ב", text: "ASSESSMENT RISK פיתוח קוד וביצוע", correct: false },
+                    { letter: "ג", text: "Deploy & Dynamic Software testing + Penetration Test", correct: true },
+                    { letter: "ד", text: "DEVELOP & Static Code Analisys", correct: false }
+                ],
+                explanation: "שלב 4 בדרך כלל כולל בדיקות דינמיות + Penetration Testing לפני עלייה לייצור."
+            },
+            // Continuing with more questions from the file (32-89)
+            {
+                id: 32,
+                q: "הסיבה שיש חשיבות, בהיבט של הגנת מידע, לרשום כל עובד מערכת משאבי אנוש נועד כדי אפשר :",
+                options: [
+                    { letter: "א", text: "לאפשר גישה מרחוק למערכות של ארגונים דומים אחרים וגם מתחרים באמצעות IDM, AD", correct: false },
+                    { letter: "ב", text: "בסיס לניהול זהויות והרשאות באמצעות IDM", correct: true },
+                    { letter: "ג", text: "ניפוק בגדי עבודה ותלושי מזון כך שלא תיגנב זהות העובד", correct: false },
+                    { letter: "ד", text: "יכולת לקבל שכר חודשי ותלוש שכר אלקטרוני", correct: false }
+                ],
+                explanation: "רישום עובדים במערכת HR מהווה בסיס לניהול זהויות (Identity Management) והרשאות."
+            },
+            {
+                id: 33,
+                q: "באיזה חוק נאמר שממונה אבטחת מידע יהיה כפוף למנכ\"ל או לבעל משרה בכירה ?",
+                options: [
+                    { letter: "א", text: "חוק הגנת הפרטיות התשמ\"א 1981", correct: true },
+                    { letter: "ב", text: "חוק המחשבים 1995", correct: false },
+                    { letter: "ג", text: "תקן ISO27001", correct: false },
+                    { letter: "ד", text: "חוק הסייבר מטעם המערך להגנת הסייבר במגזר האזרחי", correct: false }
+                ],
+                explanation: "על פי חוק הגנת הפרטיות, ממונה אבטחת מידע כפוף ישירות להנהלה הבכירה."
+            },
+            {
+                id: 34,
+                q: "על פי נהלי עבודה להגנת מידע בתקשורת ,המערכת תעבוד עם :",
+                options: [
+                    { letter: "א", text: "פרוטוקולי TCP/IP מאובטחים בעלי יכולת הצפנה הניתנים לניטור ואכיפה", correct: true },
+                    { letter: "ב", text: "פרוטוקולים בתקשורת בעלי יכולת בקרה", correct: false },
+                    { letter: "ג", text: "תקשורת הנתונה לבקרת של NAC", correct: false },
+                    { letter: "ד", text: "פרוטוקול Kerberos לא הצפנה", correct: false }
+                ],
+                explanation: "יש להשתמש בפרוטוקולים מאובטחים עם יכולת הצפנה, ניטור ואכיפה."
+            },
+            {
+                id: 35,
+                q: "לקראת הכנת תוכנית הגנת מידע באיפיון של תהליך, יגיש בעל המידע לממונה הגנת מידע את התיאור הפונקציונאלי של התהליך. דסעיפים שיש לפרט אותם בתיאור הפונקציונאלי הוא :",
+                options: [
+                    { letter: "א", text: "פירוט הרשאות לפי תפקיד", correct: false },
+                    { letter: "ב", text: "פרוט המשתמשים במערכת", correct: false },
+                    { letter: "ג", text: "פרוט פתרונות אבטחת המידע בתקשורת", correct: false },
+                    { letter: "ד", text: "איומים אפשריים על המידע, הנכס או כל פגיעה אפשרית", correct: true }
+                ],
+                explanation: "בתיאור הפונקציונלי חובה לפרט את האיומים האפשריים על המידע והנכס."
+            },
+            {
+                id: 36,
+                q: "בכל סוג התקשרות של הארגון/עסק עם ספקים חיצוניים ( הסכם, חוזה, מכרז, התקשרות ) ישולב פרק הגנת מידע",
+                options: [
+                    { letter: "א", text: "רק לספקים שיש להם חיבור למידע רגיש", correct: false },
+                    { letter: "ב", text: "נכון", correct: true },
+                    { letter: "ג", text: "לא נכון", correct: false },
+                    { letter: "ד", text: "נספח שמירת סודיות והגנת מידע מיועד רק לעובדי הארגון", correct: false }
+                ],
+                explanation: "יש לשלב פרק הגנת מידע בכל התקשרות עם ספק חיצוני."
+            },
+            {
+                id: 37,
+                q: "הגעת לתפקיד מנהל אבטחת מידע בארגון. מהן ארבע הפעולות הראשונות שתבצע לפני שתכין את תוכנית הגנת הסייבר של הארגון ?",
+                options: [
+                    { letter: "א", text: "מיפוי תהליכים, מיפוי נכסים, בדיקת רמת הגנת המידע, קביעת סיכונים וניהולם", correct: true },
+                    { letter: "ב", text: "בדיקת ספקים חיצוניים + הדרכת עובדים + מיפוי תהליכים + בדיקת ציות לחוק", correct: false },
+                    { letter: "ג", text: "התקנת אנטי וירוס + חומת אש + גיבויים + בדיקת חדירות", correct: false },
+                    { letter: "ד", text: "מיפוי תהליכים + בדיקת דרישות חוק + כתיבת מדיניות + ביצוע PT", correct: false }
+                ],
+                explanation: "התשובה הנכונה (המושלמת): מיפוי תהליכים → מיפוי נכסים → בדיקת רמת הגנת המידע → קביעת סיכונים וניהולם."
+            },
+            {
+                id: 38,
+                q: "אחד מעקרונות ביסוד במדיניות הגנת המידע בארגון / עסק אומר: ( לציין את התשובה המדויקת יותר מבין התשובות )",
+                options: [
+                    { letter: "א", text: "המידע של ספקים יימסר מהארגון לספק רק על פי הנאמר בחוק המחשבים ולא לפי מדיניות הגנת המידע הארגוני", correct: false },
+                    { letter: "ב", text: "מידע ומערכות המעבדות את המידע הנמצאים בתחומי הארגן או שנמסרו לספק חיצוני לשם שירות הארגון , הם רכוש הארגון וכפופים למדיניות זו.", correct: true },
+                    { letter: "ג", text: "מידע ומערכות המעבדות את המידע הנמצאים בתחומי הארגון הם באחריות הארגון. הספקים של ארגון יפעלו לפי מדיניות הגנת המידע שלהם", correct: false },
+                    { letter: "ד", text: "מידע הנמצא בתחומי הארגון הם באחריות אנשי הביטחון של הארגון/ העסק", correct: false }
+                ],
+                explanation: "כל המידע והמערכות, גם כאלה שנמסרו לספק חיצוני, נשארים רכוש הארגון וכפופים למדיניותו."
+            },
+            {
+                id: 39,
+                q: "בהגנת המידע של שרשרת האספקה ,עקרון המידור הוא ברמה של:",
+                options: [
+                    { letter: "א", text: "הפרדה בתקשורת, שותפי סוד", correct: false },
+                    { letter: "ב", text: "שותפי סוד, הפרדה פיזית, הפרדה בתקשורת", correct: true },
+                    { letter: "ג", text: "הפרדה פיזית ,הסכם סודיות, הפרדה בתקשורת", correct: false },
+                    { letter: "ד", text: "הפרדה פיזית ,שותפי סוד , תקן ISO27001", correct: false }
+                ],
+                explanation: "עקרון המידור בשרשרת אספקה כולל: שותפי סוד + הפרדה פיזית + הפרדה בתקשורת."
+            },
+            {
+                id: 40,
+                q: "חברה העוסקת בשירות מכירות מוצרי צריכה באינטרנט חתמה הסכם שירותים עם החשב הכללי בממשלה. לפי ההסכם ,עובדי המדינה מקבלים הנחה ברכישת מוצרים. מחשבי החברה נפרצו ונגנב מידע ממחשבי החברה. בבדיקת המקרה עולה כי החברה לא הייתה בעלת תו תקן ISO27001 מי הגורם הנושא באחריות למחדל זה ?",
+                options: [
+                    { letter: "א", text: "מנהל אבטחת המידע של החברה.", correct: false },
+                    { letter: "ב", text: "מנהל אבטחת המידע של הממשלה.", correct: false },
+                    { letter: "ג", text: "החשב הכללי שלא בדק מראש שהחברה בעלת תו תקן iso27001", correct: true },
+                    { letter: "ד", text: "בעל החברה של ווידא שיהיה בעל תו תקן iso27001 טרם שחתם הסכם עם החשב הכללי", correct: false }
+                ],
+                explanation: "החשב הכללי (הגורם המתקשר) היה צריך לוודא שהספק עומד בדרישות אבטחת מידע (ISO27001)."
+            },
+            {
+                id: 41,
+                q: "על פי ערכי היסוד של מדיניות הגנת המידע בארגון יש לבצע \" הלבנה \" ובדיקה של הגנת מידע ל :",
+                options: [
+                    { letter: "א", text: "רק למכשור וציוד רפואי בתוך הארגון המחובר לאינטרנט .", correct: false },
+                    { letter: "ב", text: "רק למחשבים והתקני זיכרון ניידים שהגיעו מגורם חיצוני שמחוץ לארגון .", correct: false },
+                    { letter: "ג", text: "כל סוג מידע אלקטרוני, חומרה, תוכנה, מכשור וציוד משובץ מחשב שהגיע לארגון מגורם שמחוץ לארגון .", correct: true },
+                    { letter: "ד", text: "רק לתוכנות ולמידע שהגיע מכיוון מהאינטרנט .", correct: false }
+                ],
+                explanation: "יש לבצע \"הלבנה\" (screening) לכל מה שנכנס לארגון מבחוץ – חומרה, תוכנה, מידע ומכשור."
+            },
+            {
+                id: 42,
+                q: "הרגולציה האירופאית להגנת הפרטיות והמידע GDPR חלה על :",
+                options: [
+                    { letter: "א", text: "רק על עסק המעבד מידע של אזרח, מאחד ממדינות השוק האירופי ומקום מושבו של העסק הוא בתוך אחת ממדינות השוק האירופאי", correct: false },
+                    { letter: "ב", text: "כל אדם שנמצא בגבולות המדינות השייכות לאיחוד האירופי .", correct: false },
+                    { letter: "ג", text: "מי שיש לו, או מעבד, מידע של אדם שנמצא בתוך שטח מדינות החברת באיחוד האירופי ( רק אזרח שהוא תושב מאחד ממדינות השוק האירופאי)", correct: false },
+                    { letter: "ד", text: "מי שיש לו, או מעבד, מידע של אדם שנמצא בתוך שטח מדיניות החברות בשוק באיחוד האירופי ( ולא בהכרח הוא אזרח אירופאי )", correct: true }
+                ],
+                explanation: "GDPR חל על כל מי שמעבד מידע אישי של אדם שנמצא באיחוד האירופי, ללא קשר לאזרחות."
+            },
+            {
+                id: 43,
+                q: "בהרגולציה האירופאית להגנת הפרטיות והמידימוש בשרת MS-SQL  מחייב כי לצורך הזדהות יעשה שימוש ב: ",
+                options: [
+                    { letter: "א", text: "Kerberos", correct: false },
+                    { letter: "ב", text: "MFA", correct: false },
+                    { letter: "ג", text: "Windows authentication", correct: true },
+                    { letter: "ד", text: "סיסמת משתמש בלבד .", correct: false }
+                ],
+                explanation: "בסביבת MS-SQL מומלץ/נדרש להשתמש ב-Windows Authentication."
+            },
+            {
+                id: 44,
+                q: "בעולם הגנת המידע, הכוונה במושג \" שרשרת האספקה\"",
+                options: [
+                    { letter: "א", text: "רק ספקים ויועצים חיצוניים , כולל ספקי צד ג' שמגיעים פיזית לארגון / עסק", correct: false },
+                    { letter: "ב", text: "כל גורם מחוץ לארגון / עסק , כולל ספקי צד ג', להם יש גישה לארגון ולמידע רגיש", correct: true },
+                    { letter: "ג", text: "רק ספקים וחברות בנות המחוברים לארגון / עסק באמצעות גישה מהאינטרנט", correct: false },
+                    { letter: "ד", text: "רק ספקים גדולים שמחוברים לארגון בתקשורת נתונים, בעיקר ספקים מחו\"ל", correct: false }
+                ],
+                explanation: "שרשרת האספקה כוללת כל גורם חיצוני שיש לו גישה למידע או למערכות של הארגון."
+            },
+            {
+                id: 45,
+                q: "על פי מדיניות הגנת המידע ,כל אירוע של הגנת מידע יתוחקר במטרה",
+                options: [
+                    { letter: "א", text: "לאתר מי אחראי על הנושא כדי שהאירוע לא יחזור על עצמו", correct: false },
+                    { letter: "ב", text: "לאתר את סיבת השורש", correct: true },
+                    { letter: "ג", text: "לבדוק אם קרה כזה מקרה בעבר ולדווח למשרד המשפטים", correct: false },
+                    { letter: "ד", text: "כדי להעביר דו\"ח למבקר הפנים בארגון ומבקר המדינה", correct: false }
+                ],
+                explanation: "מטרת החקירה היא למצוא את שורש הבעיה (Root Cause) ולא רק את מי אשם."
+            },
+            {
+                id: 46,
+                q: "על פי אחד מעקרונות היסוד במדיניות הגנת המידע בארגון – מידע ותהליכים המעבדים את המידע יאובטחו על פי מדיניות זו ב :",
+                options: [
+                    { letter: "א", text: "בכל עת שעובדים עם המידע רק בארגון ובחברות בנות", correct: false },
+                    { letter: "ב", text: "בכל עת ובכל מקום בו הם נמצאים ו/או אמורים להימצא בשליטה ובבעלות הארגון/ העסק וחברות בנות", correct: true },
+                    { letter: "ג", text: "משרד הבריאות, בנק ישראל, ביטוח לאומי, והלשכה המרכזית לסטטיסטיקה", correct: false },
+                    { letter: "ד", text: "בכל מקום שיש עובדים של ספק (שרשרת האספקה)", correct: false }
+                ],
+                explanation: "המידע מוגן בכל מקום שבו הוא נמצא תחת שליטת הארגון, כולל אצל ספקים."
+            },
+            {
+                id: 47,
+                q: "גישת המשתמש למידע רגיש במערכות מידע בארגון / עסק מותנה בהרשאה לפי :",
+                options: [
+                    { letter: "א", text: "לפי ההגדרה שקבע המנהל של העובד .", correct: false },
+                    { letter: "ב", text: "גישה למידע אינה תלויה בתפקיד העובד .", correct: false },
+                    { letter: "ג", text: "פרופיל עיסוק של המשתמש .", correct: true },
+                    { letter: "ד", text: "לא לפי פרופיל עיסוק אלא על פי סוג הכשרתו האקדמית .", correct: false }
+                ],
+                explanation: "הרשאה ניתנת לפי פרופיל העיסוק / תפקיד של המשתמש (Need to know + Least Privilege)."
+            },
+            {
+                id: 48,
+                q: "מה קובעת מדיניות הגנת המידע בארגון ונוהל עבודה בנושא הזדהות בגישה מבחוץ אל מערכות המידע בתוך הארגון ?",
+                options: [
+                    { letter: "א", text: "גישה מחוץ לארגון למערכות הארגון מותנה בהזדהות של חברת האינטרנט בשיטה : Two-factor authentication והזדהות אישית של המשתמש.", correct: false },
+                    { letter: "ב", text: "גישה מחוץ לארגון למערכות הארגון מותנה בהזדהות חד ערכית, הזדהות חזקה של המשתמש והתחנה ממנו הוא מתקשר, בשיטת ( MFA ( Multi- factor authentication", correct: true },
+                    { letter: "ג", text: "גישה מחוץ לארגון למערכות הארגון מותנה בהזדהות של המחשב בלבד.", correct: false },
+                    { letter: "ד", text: "אין צורך לבצע הזדהות אישית שכן תהליך ההזדהות מבוצע באמצעות Windows Authentication", correct: false }
+                ],
+                explanation: "גישה מרחוק מחייבת MFA + זיהוי חזק של המשתמש והמכשיר."
+            },
+            {
+                id: 49,
+                q: "הזדהות מרוחקת באמצעות תכונה ביומטרית מחייבת :",
+                options: [
+                    { letter: "א", text: "חל איסור על הזדהות ביומטרית מרחוק", correct: false },
+                    { letter: "ב", text: "שימוש ברכיב הזדהות פיזי נוסף", correct: false },
+                    { letter: "ג", text: "תקשורת בערוץ בטוח", correct: true },
+                    { letter: "ד", text: "תבצע רק אל מול רכיב שנמצא בידי המזדהה", correct: false }
+                ],
+                explanation: "הזדהות ביומטרית מרחוק מחייבת ערוץ תקשורת מאובטח (TLS/SSL)."
+            },
+            {
+                id: 50,
+                q: "על מנת לקבוע סיכוני הגנת מידע בארגון ,נדרש תחילה לבצע את התהליכים הללו :",
+                options: [
+                    { letter: "א", text: "לבצע סקר תהליכים, בדיקת דרישות החוק, בדיקת דרישות מדיניות הגנת מידע ואז לקבוע את הסיכונים", correct: false },
+                    { letter: "ב", text: "לבצע סקר סיכונים ולבצע סקר תהליכים ולקבוע סיכונים", correct: false },
+                    { letter: "ג", text: "לבצע סקר סיכונים", correct: false },
+                    { letter: "ד", text: "לבצע סקר נכסים, לבצע סקר תהליכים, לבדוק את רמת הגנת המידע בנכס ובתהליך והפערים שיתגלו הינם הסיכונים", correct: true }
+                ],
+                explanation: "תהליך ניהול סיכונים: מיפוי נכסים → מיפוי תהליכים → בדיקת רמת הגנה → זיהוי פערים = סיכונים."
+            },
+            {
+                id: 51,
+                q: "כשבאים ליישם את מדיניות הגנת המידע של הארגון, הבסיס להזדהות משתמש הינה הזדהות חד משמעית וצריכה לקיים :",
+                options: [
+                    { letter: "א", text: "הצפנה מקצה לקצה כשמפתחות ההצפנה מנוהלים על ידי הארגון", correct: false },
+                    { letter: "ב", text: "זיהוי האדם עצמו, זיהוי המחשב ממנו מתחבר המשתמש", correct: false },
+                    { letter: "ג", text: "זיהוי האדם עצמו , אימות הזיהוי", correct: true },
+                    { letter: "ד", text: "אימות הזיהוי , צילום Session, עבודה עם תעודה דיגיטלית .", correct: false }
+                ],
+                explanation: "הזדהות חד-משמעית = Identification + Authentication."
+            },
+            {
+                id: 52,
+                q: "על פי תקנות אבטחת המידע שבחוק הגנת הפרטיות התשמ\"א 1981 , ארגון שהוגדר ברמת אבטחה גבוהה ,נדרש לבצע סקר סיכונים ומבדק חדירה ( PT ) אחת ל:",
+                options: [
+                    { letter: "א", text: "רק במקרה שאירע אירוע אבטחת מידע", correct: false },
+                    { letter: "ב", text: "24 חודש", correct: false },
+                    { letter: "ג", text: "12 חודש", correct: false },
+                    { letter: "ד", text: "18 חודש", correct: true }
+                ],
+                explanation: "לרמת אבטחה גבוהה – סקר סיכונים + PT אחת ל-18 חודשים."
+            },
+            {
+                id: 53,
+                q: "המסמך המשמעותי ביותר בארגון/עסק , בו מוגדר לכל עובד, מה היא הגנת המידע הנדרשת הוא:",
+                options: [
+                    { letter: "א", text: "תקן ISO27001 .", correct: false },
+                    { letter: "ב", text: "מדיניות הגנת המידע בארגון", correct: true },
+                    { letter: "ג", text: "חוק הגנת הפרטיות התשמ\"א 1981", correct: false },
+                    { letter: "ד", text: "התורה להגנת הסייבר 1.0", correct: false }
+                ],
+                explanation: "מדיניות הגנת המידע הארגונית היא המסמך המרכזי שמגדיר את הדרישות לכל עובד."
+            },
+            {
+                id: 54,
+                q: "ההחלטה שבישראל יהיה גוף אחד העוסק בהגנת סייבר במגזר האזרחי ,שיקרא \" המערך להגנת הסייבר הלאומי \" הינה החלטה",
+                options: [
+                    { letter: "א", text: "השר לענייני סייבר", correct: false },
+                    { letter: "ב", text: "שר המדע", correct: false },
+                    { letter: "ג", text: "השר לענייני מודיעין", correct: false },
+                    { letter: "ד", text: "הממשלה", correct: true }
+                ],
+                explanation: "ההחלטה על הקמת המערך להגנת הסייבר התקבלה על ידי הממשלה."
+            },
+            {
+                id: 55,
+                q: "נושא המשרה בארגון שמוגדר כמנהל הסיכון בארגון הוא :",
+                options: [
+                    { letter: "א", text: "בעל המידע", correct: false },
+                    { letter: "ב", text: "מנכ\"ל", correct: true },
+                    { letter: "ג", text: "אחד מחברי הדריקטוריון", correct: false },
+                    { letter: "ד", text: "מנהל הפרויקט", correct: false }
+                ],
+                explanation: "מנכ\"ל / הנהלה בכירה הם בעלי האחריות הכוללת לניהול סיכונים."
+            },
+            {
+                id: 56,
+                q: "מטרת מדיניות הגנת המידע הנה להגדיר ולפרט ולהבהיר את חשיבות הגנת המידע בארגון, את מדיניות ההנהלה בנושא וכן את נהלי קיומה וזאת על מנת שהמידע על כל היבטיו יהיה:",
+                options: [
+                    { letter: "א", text: "חסוי, סודי, מבוקר, אנונימי", correct: false },
+                    { letter: "ב", text: "אמין, זמין, סודי, מבוקר", correct: true },
+                    { letter: "ג", text: "אמין, מאובטח, מבוקר, מנקודת מבט של פרטיות האדם", correct: false },
+                    { letter: "ד", text: "רגיש, סודי, זמין, מבוקר", correct: false }
+                ],
+                explanation: "עקרונות אבטחת מידע: CIA + בקרה (Confidentiality, Integrity, Availability + Accountability)."
+            },
+            {
+                id: 57,
+                q: "בחוזה / הסכם בין הארגון לספק ייכתב פרק הגנת מידע פרק זה ישולב כ :",
+                options: [
+                    { letter: "א", text: "כנספח הגנת מידע להסכם בינ\"ל בלבד, לפי דרישות GDPR", correct: false },
+                    { letter: "ב", text: "כפרק בגוף ההסכם בסטטוס M ,שהפרתו הינה הפרה יסודית של ההסכם", correct: true },
+                    { letter: "ג", text: "פרק הגנת מידע ישולב רק במקרה שיש בהתקשרות גישה למידע עסקי כלכלי", correct: false },
+                    { letter: "ד", text: "כפרק בגוף ההסכם שהפרתו אינה הפרה יסודית של ההסכם.", correct: false }
+                ],
+                explanation: "פרק הגנת מידע חייב להיות חלק בלתי נפרד מההסכם והפרתו = הפרה יסודית."
+            },
+            {
+                id: 58,
+                q: "הגדרת \" מידע רגיש \" – על פי הנאמר בחוק הגנת הפרטיות התשמ\"א 1981 הוא :",
+                options: [
+                    { letter: "א", text: "נתונים על אישיותו של אדם, צנעת אישיותו, מצבו הבריאותי, דעות ואמונות ,מצב משפחתי, מין, דת , או כל מידע שקבע שר המשפטים בצו", correct: false },
+                    { letter: "ב", text: "נתונים על משפחתו של אדם, דעותיו, צנעת חייו, מצבו הבריאותי, רמת ההשכלה, כתובת מגורים, או מידע ששר המשפטים קבע בצו וועדת החוקה חוק ומשפט אישרה", correct: false },
+                    { letter: "ג", text: "נתונים על אישיותו של אדם, צנעת אישיותו, מצב בריאותו, מצבו הכלכלי, דעותיו ואמונתו, או מידע ששר המשפטים קבע בצו, באישור ועדת החוקה חוק ומשפט של הכנסת, שהוא מידע רגיש", correct: true },
+                    { letter: "ד", text: "נתונים על בריאותו של אדם, צנעת אישיותו, רקע משפחתי, מצבו הכלכלי, או מידע ששר המשפטים קבע בצו.", correct: false }
+                ],
+                explanation: "הגדרת מידע רגיש בחוק כוללת נתונים אישיים, בריאותיים, כלכליים, דעות ואמונות."
+            },
+            {
+                id: 59,
+                q: "תהליכים תקינים של הגנת מידע בארגון / עסק , מורכבים מ :",
+                options: [
+                    { letter: "א", text: "חוק הגנת הפרטיות התשמ\"א .1981 הוראות עבודנה למיישם, תהליכי בקרה וביקורת.", correct: false },
+                    { letter: "ב", text: "מדיניות הגנת מידע. נהלי עבודה למיישם, הוראות תפעול לגורמים המבצעים.", correct: false },
+                    { letter: "ג", text: "חוק/תקנות/תקנים./ מדיניות הגנת מידע . נהלי עבודה למיישם, הוראות תפעול לגורמים המבצעים. נהלי בקרה וביקורת.", correct: true },
+                    { letter: "ד", text: "חוק המחשבים, חוק הגנת הפרטיות התשמ\"א .1981 הוראות עבודה למיישם, הוראות בקרה וביקורת.", correct: false }
+                ],
+                explanation: "תהליך מלא כולל: חוק/תקנות → מדיניות → נהלים → הוראות תפעול → בקרה וביקורת."
+            },
+            {
+                id: 60,
+                q: "מה זה שולחן נקי?",
+                options: [
+                    { letter: "א", text: "מסגרת שולחן נקי כל מערכות במחשב יינעלו באופן שגישה אליהן תחייב הזדהות חדשה", correct: true },
+                    { letter: "ב", text: "ניקוי פיזי של שולחן העבודה מסודר", correct: false },
+                    { letter: "ג", text: "מדיניות של ארגון לניקוי שולחנות בסוף יום עבודה", correct: false },
+                    { letter: "ד", text: "תהליך גיבוי אוטומטי של קבצים בסוף יום", correct: false }
+                ],
+                explanation: "שולחן נקי (Clean Desk Policy) – נעילת כל המערכות בסוף יום / כשעוזבים את התחנה."
+            },
+            {
+                id: 61,
+                q: "האחריות לקיום \" שולחן נקי \" חלה על:",
+                options: [
+                    { letter: "א", text: "כל אחד מהלקוחות והמנהלים בעסק", correct: false },
+                    { letter: "ב", text: "כל עובד בסביבת עבודתו", correct: true },
+                    { letter: "ג", text: "רק על צוות המחשוב ותמיכה", correct: false },
+                    { letter: "ד", text: "רק על עובדים שיש להם נגיעה למידע רגיש", correct: false }
+                ],
+                explanation: "האחריות ל-Clean Desk חלה על כל עובד בסביבת העבודה שלו."
+            },
+            // Additional questions from the file (Anastasia test + more)
+            {
+                id: 62,
+                q: "אחד הנושאים המחוייבים בארגון על פי תקן 27799ISO הינו :",
+                options: [
+                    { letter: "א", text: "מחויבות הנהלה", correct: true },
+                    { letter: "ב", text: "מחוייבות המערך הגנת הסייבר", correct: false },
+                    { letter: "ג", text: "מחויבות וועד עובדים", correct: false },
+                    { letter: "ד", text: "מחויבות המשרד הממשלתי שאחראי על המגזר", correct: false }
+                ],
+                explanation: "ISO 27799 מחייב מחויבות הנהלה (Leadership commitment)."
+            },
+            {
+                id: 63,
+                q: "חובת הדיווח – עובד שגילה כי נגרמה פגיעה בהגנת מידע ידווח ל:",
+                options: [
+                    { letter: "א", text: "רק למנהלו הישיר", correct: false },
+                    { letter: "ב", text: "אין חובת דיווח. מערכות הבקרה יגלו את התקלה באופן אוטומטי", correct: false },
+                    { letter: "ג", text: "לממונה על הגנת המידע בארגון וליועץ המשפטי של הארגון", correct: false },
+                    { letter: "ד", text: "למנהלו הישיר ולקצין הביטחון במוסד. שני האחרונים יעבירו דיווח על התקלה לממונה הגנת מידע בארגון/עסק", correct: true }
+                ],
+                explanation: "חובת דיווח: למנהל הישיר + קצין ביטחון → העברה לממונה אבטחת מידע."
+            },
+            {
+                id: 64,
+                q: "על פי תקנות אבטחת המידע בחוק הגנת הפרטיות התשמ\"א ,1981 הרשאות גישה למערכות מידע מחייבת :",
+                options: [
+                    { letter: "א", text: "הרשאה לפי החלטת מנהל / אדמיניסטרטור", correct: false },
+                    { letter: "ב", text: "הזדהות רבת ברירות MFA", correct: false },
+                    { letter: "ג", text: "לא נדרשת הרשאה אלא הזדהות חד פעמית", correct: false },
+                    { letter: "ד", text: "הרשאה אישית חד משמעית", correct: true }
+                ],
+                explanation: "הרשאה חייבת להיות אישית וחד-משמעית."
+            },
+            {
+                id: 65,
+                q: "על פי תקנות אבטחת המידע בחוק הגנת הפרטיות התשמ\"א ,1981 התקנות הגדירו מספר רמות אבטחה:",
+                options: [
+                    { letter: "א", text: "רמת אבטחה בסיסית, אין צורך ברמת אבטחה, רמת אבטחה קריטית", correct: false },
+                    { letter: "ב", text: "לא הוגדרו בתקנות רמות אבטחה", correct: false },
+                    { letter: "ג", text: "רמת אבטחה בינונית, רמת אבטחה גבוהה, רמת אבטחה קריטית", correct: false },
+                    { letter: "ד", text: "רמת אבטחה בסיסית, רמת אבטחה בינונית, רמת אבטחה גבוהה", correct: true }
+                ],
+                explanation: "התקנות מגדירות 3 רמות: בסיסית, בינונית וגבוהה."
+            },
+            {
+                id: 66,
+                q: "על פי תקנות GDPR ,כל חברה המעבדת מידע אישי של תושב אירופה ומחוייבת לעמוד בדרישות GDPR צריכה",
+                options: [
+                    { letter: "א", text: "למנות אחראי על הכנת מידע שיווקי בנושא הגנת סייבר ובטחון המטופל ומרכז נושא פרטיות", correct: false },
+                    { letter: "ב", text: "למנות אחראי על ביצוע הגנת מידע רק בתיקשורת הבין אישית וממונה הרשאות ארגוני", correct: false },
+                    { letter: "ג", text: "למנות נציג חברה ) נציג אירופאי( בתוך אחת ממדינות האיחוד האירופי", correct: true },
+                    { letter: "ד", text: "למנות מנחה מקצועי רק לנושא הרשאות לאנשי מחשוב", correct: false }
+                ],
+                explanation: "GDPR מחייב מינוי נציג אירופאי (EU Representative) כאשר החברה אינה באיחוד."
+            },
+            {
+                id: 67,
+                q: "תקן 27799ISO הינו תקן להגנת מידע של ארגוני :",
+                options: [
+                    { letter: "א", text: "איכות הסביבה", correct: false },
+                    { letter: "ב", text: "בריאות", correct: true },
+                    { letter: "ג", text: "כלכליים", correct: false },
+                    { letter: "ד", text: "אנרגיה", correct: false }
+                ],
+                explanation: "ISO 27799 הוא תקן להגנת מידע בארגוני בריאות."
+            },
+            {
+                id: 68,
+                q: "על פי GDPR, אתר אינטרנט שנגיש לתושבי אירופה ואינו מעבד מידע אישי :",
+                options: [
+                    { letter: "א", text: "מחוייב בתשלום אגרה לאיחוד האירופי", correct: false },
+                    { letter: "ב", text: "מחוייב בדרישות GDPR", correct: false },
+                    { letter: "ג", text: "אינו מחוייב בדרישות GDPR", correct: true },
+                    { letter: "ד", text: "מחוייב בבדיקת חוסן PT", correct: false }
+                ],
+                explanation: "אם האתר אינו מעבד מידע אישי – הוא אינו כפוף ל-GDPR."
+            },
+            {
+                id: 69,
+                q: "על פי תקן 27799ISO ,בעל המידע הוא",
+                options: [
+                    { letter: "א", text: "כל עובד שהמידע נוגע אליו", correct: false },
+                    { letter: "ב", text: "יו\"ר וועד עובדים של הארגון", correct: false },
+                    { letter: "ג", text: "מנהל מערכת מידע ) שהוא מנהל מאגר ספציפי (", correct: true },
+                    { letter: "ד", text: "מנכ\"ל הארגון", correct: false }
+                ],
+                explanation: "בעל המידע (Information Owner) הוא מנהל המאגר/המערכת."
+            },
+            {
+                id: 70,
+                q: "שרשרת האספקה – התעודה הדיגיטלית בנתבי התקשורת בין הספק לארגון תנוהל באחריות:",
+                options: [
+                    { letter: "א", text: "הארגון", correct: true },
+                    { letter: "ב", text: "ספק התעודה הדיגיטלית", correct: false },
+                    { letter: "ג", text: "הספק", correct: false },
+                    { letter: "ד", text: "חברת \"קומדע \"המעניקה את התוקף לתעודה הדיגיטלית", correct: false }
+                ],
+                explanation: "הארגון אחראי על ניהול התעודות הדיגיטליות בתקשורת עם ספקים."
+            },
+            {
+                id: 71,
+                q: "שרשרת האספקה - המוטיבציה של ספק לרמת הגנת מידע ועדכונה מונע מהסיבות הללו :",
+                options: [
+                    { letter: "א", text: "ייתכן שאינו כפוף לרגולציה, עלות כספית גבוהה ,מחוייבות נמוכה כלפי הלקוח/הארגון", correct: true },
+                    { letter: "ב", text: "הינו ספק יחיד, כפוף לחוקים בחו\"ל, יש לו תקן ISO", correct: false },
+                    { letter: "ג", text: "חוסר בכ\"א להגנת מידע.", correct: false },
+                    { letter: "ד", text: "מודעות נמוכה, עלויות השקעה גבוהות, אין מתחרים", correct: false }
+                ],
+                explanation: "ספקים רבים אינם כפופים לרגולציה ישירה ולכן המוטיבציה שלהם נמוכה יותר."
+            },
+            {
+                id: 72,
+                q: "על פי תקנות אבטחת המידע בחוק הגנת הפרטיות התשמ\"א 1981, מסמכי המדיניות לאבטחת מידע יקבעו על ידי :",
+                options: [
+                    { letter: "א", text: "מנהל הסיכונים הארגוני", correct: false },
+                    { letter: "ב", text: "ממונה אבטחת מידע", correct: false },
+                    { letter: "ג", text: "סמנכ\"ל מערכות מידע", correct: false },
+                    { letter: "ד", text: "ההנהלה והדירקטוריון", correct: true }
+                ],
+                explanation: "מסמכי מדיניות אבטחת מידע מאושרים על ידי ההנהלה והדירקטוריון."
+            },
+            {
+                id: 73,
+                q: "מטרת ארגז הכלים לניהול תקני ניהול",
+                options: [
+                    { letter: "א", text: "ניהול תחזוקה, ניהול ארגוני, הדרכה ובקרה", correct: false },
+                    { letter: "ב", text: "ניהול בקרה, ניהול תחזוקה ,ניהול סיכונים", correct: false },
+                    { letter: "ג", text: "מטרה ייעודית (ניהול בטיחות,סביבה,לקוח). שיפור מתמיד. למידה ארגונית", correct: true },
+                    { letter: "ד", text: "ניהול סיכונים. ניהול אכיפה. ניהול השיפור", correct: false }
+                ],
+                explanation: "ארגז הכלים לניהול תקנים נועד לשיפור מתמיד ולמידה ארגונית."
+            },
+            {
+                id: 74,
+                q: "המטרה העיקרית של תקן 27799ISO היא לוודא :",
+                options: [
+                    { letter: "א", text: "שהארגון מנוהל ופועל על פי תפישת הגנת מידע .", correct: true },
+                    { letter: "ב", text: "השארגון פועל על פי \"נוהל מפתח\"", correct: false },
+                    { letter: "ג", text: "שהארגון פועל במנטליות של הפקת לקחים", correct: false },
+                    { letter: "ד", text: "שהארגון פועל במסגרת GDPR", correct: false }
+                ],
+                explanation: "ISO 27799 נועד לוודא שהארגון פועל לפי תפיסת הגנת מידע מסודרת."
+            },
+            {
+                id: 75,
+                q: "תקנות GDPR מחייבות כל מדינה החברה באיחוד האירופי :",
+                options: [
+                    { letter: "א", text: "לחוקק חוק מדינתי המחייב להכיל את GDPR", correct: true },
+                    { letter: "ב", text: "למנות שר לעיניני GDPR", correct: false },
+                    { letter: "ג", text: "להקים גוף ביקורת במשרד המשפטים לאכיפה של תקנות GDPR", correct: false },
+                    { letter: "ד", text: "לקיים גם את חוקי הפרטיות של מדינת קליפורניה CCPA", correct: false }
+                ],
+                explanation: "כל מדינה באיחוד חייבת להתאים את החקיקה הלאומית ל-GDPR."
+            },
+            {
+                id: 76,
+                q: "על פי דרישות תקן 27799ISO, בפרק ניהול סיכונים נדרש :",
+                options: [
+                    { letter: "א", text: "יצירת נוהל לניהול סיכונים בארגון", correct: true },
+                    { letter: "ב", text: "פעולה המחייבת הרשאות לפי תפקיד", correct: false },
+                    { letter: "ג", text: "BCP .יצירת", correct: false },
+                    { letter: "ד", text: "רק נוהל מדיניות ארגונית", correct: false }
+                ],
+                explanation: "ISO 27799 דורש נוהל מסודר לניהול סיכונים."
+            },
+            {
+                id: 77,
+                q: "על פי תקנות אבטחת המידע בחוק הגנת הפרטיות התשמ\"א ,1981 כפיפות ממונה אבטחת מידע תהיה אל:",
+                options: [
+                    { letter: "א", text: "מבקר הפנים של הארגון", correct: false },
+                    { letter: "ב", text: "יו\"ר הדירקטוריון", correct: false },
+                    { letter: "ג", text: "סמנכ\"ל מערכות מידע", correct: false },
+                    { letter: "ד", text: "מנכ\"ל או בעל משרה בכירה", correct: true }
+                ],
+                explanation: "ממונה אבטחת מידע כפוף ישירות למנכ\"ל או לבעל משרה בכירה."
+            },
+            {
+                id: 78,
+                q: "שרשרת האספקה – ארגון יבצע ביקורת הגנת מידע אצל ספק :",
+                options: [
+                    { letter: "א", text: "אחת ל 24 חודש", correct: false },
+                    { letter: "ב", text: "אחת ל 18 חודש", correct: false },
+                    { letter: "ג", text: "אחת ל 12 חודש", correct: true },
+                    { letter: "ד", text: "אחת לשלוש שנים", correct: false }
+                ],
+                explanation: "ביקורת על ספקים בשרשרת אספקה – אחת לשנה (12 חודשים)."
+            },
+            {
+                id: 79,
+                q: "בנושא הגנת המידע בתהליכים ה GDPR מחייב :",
+                options: [
+                    { letter: "א", text: "שהגנת המידע תופנם לתוך תהליכי הפיתוח של התהליכים העיסקיים אך השמירה על הפרטיות אינה מחוייבת כברירת מחדל", correct: false },
+                    { letter: "ב", text: "תהליכים שיש בהם רק מידע כלכלי אישי מחייבים אישור המפקח על הבנקים", correct: false },
+                    { letter: "ג", text: "תהליכים שיש בהם מידע אישי ,עיבודם מחייב אישור GDPR מראש", correct: false },
+                    { letter: "ד", text: "שהגנת המידע תופנם לתוך תהליכי הפיתוח של התהליכים העסקיים ומחייב הגדרת שמירת הפרטיות כברירת מחדל.", correct: true }
+                ],
+                explanation: "Privacy by Design & by Default – GDPR מחייב הטמעת הגנת מידע ופרטיות כברירת מחדל."
+            },
+            {
+                id: 80,
+                q: "על פי תקן 27001ISO עקרונות ניהול הגנת מידע מבוססים בין היתר על :",
+                options: [
+                    { letter: "א", text: "מקרים ותגובות", correct: false },
+                    { letter: "ב", text: "בקרה משפטית", correct: false },
+                    { letter: "ג", text: "הגדרת פתרונות להגנת מידע", correct: false },
+                    { letter: "ד", text: "ניהול סיכונים", correct: true }
+                ],
+                explanation: "ISO 27001 מבוסס במידה רבה על ניהול סיכונים."
+            },
+            {
+                id: 81,
+                q: "לקראת הכנת תוכנית הגנת מידע באפיון של תהליך, יגיש בעל המידע לממונה הגנת מידע את התיאור הפונקציונאלי של התהליך. אחד הסעיפים שיש לפרט אותם בתיאור הפונקציונאלי הוא :",
+                options: [
+                    { letter: "א", text: "פרוט הרשאות לפי תפקיד", correct: false },
+                    { letter: "ב", text: "פרוט המשתמשים במערכת", correct: false },
+                    { letter: "ג", text: "איומים אפשריים על המידע, על הנכס או כל פגיעה אפשרית", correct: true },
+                    { letter: "ד", text: "פרוט פתרונות אבטחת המידע בתקשורת", correct: false }
+                ],
+                explanation: "בתיאור הפונקציונלי יש לפרט את האיומים האפשריים."
+            },
+            {
+                id: 82,
+                q: "על פי תקנות אבטחת המידע בחוק הגנת הפרטיות התשמ\"א ,1981 ביקורת תקופתית לבחינת העמידה בתקנות והוראות נדרשת כל :",
+                options: [
+                    { letter: "א", text: "אחת ל 24 חודש", correct: true },
+                    { letter: "ב", text: "אחת ל 18 חודש", correct: false },
+                    { letter: "ג", text: "אחת ל 12 חודש", correct: false },
+                    { letter: "ד", text: "רק לפי דרישת הרשות להגנת הפרטיות", correct: false }
+                ],
+                explanation: "ביקורת תקופתית – אחת ל-24 חודשים."
+            },
+            {
+                id: 83,
+                q: "החובה ,בישראל ,שארגונים יהיו בעלי תקן 27799ISO פורסמה באמצעות",
+                options: [
+                    { letter: "א", text: "חוזר מנכ\"ל משרד האנרגיה 33/2017", correct: false },
+                    { letter: "ב", text: "חוזר מנכל משרד הבריאות 18/2012", correct: true },
+                    { letter: "ג", text: "החלטת הממשלה 2444", correct: false },
+                    { letter: "ד", text: "חוזר המפקח על הבנקים 316", correct: false }
+                ],
+                explanation: "החובה על ISO 27799 בארגוני בריאות פורסמה בחוזר מנכ\"ל משרד הבריאות."
+            },
+            {
+                id: 84,
+                q: "על פי תקנות אבטחת המידע בחוק הגנת הפרטיות התשמ\"א ,1981 במערכות מידע שהוגדרו ברמת אבטחה גבוהה נדרשת:",
+                options: [
+                    { letter: "א", text: "פיתוח רק בקוד סגור", correct: false },
+                    { letter: "ב", text: "הפרדה לוגית ופיזית בין המערכות", correct: true },
+                    { letter: "ג", text: "בניית ארכיטקטורה מאובטחת", correct: false },
+                    { letter: "ד", text: "הפעלת מערכות הלבנה", correct: false }
+                ],
+                explanation: "ברמת אבטחה גבוהה נדרשת הפרדה לוגית ופיזית בין מערכות."
+            },
+            {
+                id: 85,
+                q: "שרשרת האספקה – בחוזה התקשרות עם ספק ייכתב שפרק הגנת מידע יתעדכן כל:",
+                options: [
+                    { letter: "א", text: "כל 24 חודש", correct: false },
+                    { letter: "ב", text: "רק בחידוש החוזה", correct: false },
+                    { letter: "ג", text: "שלוש שנים", correct: true },
+                    { letter: "ד", text: "כל 12 חודש", correct: false }
+                ],
+                explanation: "פרק הגנת מידע בהסכם עם ספק מתעדכן אחת ל-3 שנים."
+            },
+            {
+                id: 86,
+                q: "בנוהל עבודה להגנת מידע בפיתוח תוכנה השימוש בשרת SQL-MS מחייב כי לצורך הזדהות יעשה שימוש ב:",
+                options: [
+                    { letter: "א", text: "MFA", correct: false },
+                    { letter: "ב", text: "סיסמת משתמש בלבד", correct: false },
+                    { letter: "ג", text: "Kerberos", correct: false },
+                    { letter: "ד", text: "Windows authentication", correct: true }
+                ],
+                explanation: "ב-MS SQL מומלץ להשתמש ב-Windows Authentication."
+            },
+            {
+                id: 87,
+                q: "על פי ה GDPR ,המצבים בהם לנושא המידע \"זכות להישכח\"",
+                options: [
+                    { letter: "א", text: "במקרה שמונה אפוטרופוס לנושא המידע", correct: false },
+                    { letter: "ב", text: "בכל מקרה בו מבקש נושא המידע. מלבד מקרה שנושא המידע אינו בר דעת או חולה במחלה נפשית", correct: false },
+                    { letter: "ג", text: "בכל מקרה בו מבקש נושא המידע ,אלא אם יש לשמור את המידע לצורך תביעה משפטית עתידית", correct: true },
+                    { letter: "ד", text: "במקרה של מוות", correct: false }
+                ],
+                explanation: "זכות להישכח (Right to be Forgotten) קיימת אלא אם כן יש חובה חוקית לשמור את המידע."
+            },
+            {
+                id: 89,
+                q: "שרשרת האספקה – ספק יבצע אחת לשנה בדיקת חוסן PT באופן הבא:",
+                options: [
+                    { letter: "א", text: "בדיקת חוסן נדרשת אחת לשלוש שנים, מכיוון הארגון לרשת הספק,ומכיוון האינטרנט לארגון", correct: false },
+                    { letter: "ב", text: "מכיוון האינטרנט בלבד", correct: false },
+                    { letter: "ג", text: "מכיוון הארגון אל רשת הספק. מכיוון רשת הספק לארגון. מכיוון האינטרנט לרשת הספק", correct: true },
+                    { letter: "ד", text: "תבוצע בדיקת חוסן רק לשירות של הספק המוענק לארגון", correct: false }
+                ],
+                explanation: "בדיקת חוסן של ספק צריכה לכסות: מהארגון לספק, מהספק לארגון, ומאינטרנט לספק."
+            }
+        ];
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        let currentQuestionAnswered = false;
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            document.getElementById('current-q').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-q').textContent = questions.length;
+        }
+
+        function updateScoreDisplay() {
+            const el = document.getElementById('score-display');
+            if (el) {
+                el.innerHTML = `ניקוד: <span class="font-bold text-emerald-400">${score}</span>`;
+            }
+        }
+
+        function startQuiz() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('end-screen').classList.add('hidden');
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            updateProgress();
+            updateScoreDisplay();
+            showQuestion();
+        }
+
+        function showQuestion() {
+            currentQuestionAnswered = false;
+            
+            const q = questions[currentQuestionIndex];
+            document.getElementById('question-text').innerHTML = `<span class="text-sky-400 font-mono text-lg">#${q.id}</span> ${q.q}`;
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-right px-6 py-4 border border-zinc-700 hover:border-zinc-500 bg-zinc-950 rounded-2xl flex items-center gap-x-4 text-base`;
+                btn.innerHTML = `
+                    <div class="option-letter flex-shrink-0 w-8 h-8 rounded-xl border border-zinc-600 text-zinc-400 font-bold">${opt.letter}</div>
+                    <div class="flex-1 text-right">${opt.text}</div>
+                `;
+                
+                btn.onclick = () => selectAnswer(index, btn);
+                container.appendChild(btn);
+            });
+            
+            // Hide feedback
+            document.getElementById('feedback-container').classList.add('hidden');
+            updateProgress();
+        }
+
+        function selectAnswer(selectedIndex, selectedBtn) {
+            if (currentQuestionAnswered) return;
+            currentQuestionAnswered = true;
+            
+            const q = questions[currentQuestionIndex];
+            const isCorrect = q.options[selectedIndex].correct;
+            
+            // Disable all buttons
+            const allBtns = document.querySelectorAll('#options-container button');
+            allBtns.forEach(btn => btn.disabled = true);
+            
+            // Highlight correct and wrong
+            allBtns.forEach((btn, idx) => {
+                const opt = q.options[idx];
+                if (opt.correct) {
+                    btn.classList.add('correct', 'border-emerald-500');
+                    btn.classList.remove('border-zinc-700');
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('wrong', 'border-red-500');
+                }
+            });
+            
+            // Update score
+            if (isCorrect) {
+                score++;
+                updateScoreDisplay();
+            }
+            
+            // Save answer
+            userAnswers.push({
+                questionId: q.id,
+                question: q.q,
+                selected: q.options[selectedIndex].letter,
+                correct: q.options.find(o => o.correct).letter,
+                isCorrect: isCorrect,
+                correctText: q.options.find(o => o.correct).text
+            });
+            
+            // Show feedback
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackBox = document.getElementById('feedback-box');
+            
+            if (isCorrect) {
+                feedbackBox.className = `feedback-box border border-emerald-600 bg-emerald-950/40 rounded-2xl p-5 text-emerald-300`;
+                feedbackBox.innerHTML = `
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-check-circle text-emerald-400 text-2xl"></i>
+                        <div>
+                            <div class="font-bold text-emerald-400 text-lg">כל הכבוד! תשובה נכונה ✓</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                feedbackBox.className = `feedback-box border border-red-600 bg-red-950/40 rounded-2xl p-5 text-red-300`;
+                feedbackBox.innerHTML = `
+                    <div class="flex items-start gap-x-3">
+                        <i class="fa-solid fa-times-circle text-red-400 text-2xl mt-0.5"></i>
+                        <div class="flex-1">
+                            <div class="font-bold text-red-400 text-lg mb-1">לא נכון</div>
+                            <div class="text-sm">התשובה הנכונה היא <span class="font-bold">${q.options.find(o => o.correct).letter}) ${q.options.find(o => o.correct).text}</span></div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            feedbackContainer.classList.remove('hidden');
+            
+            // Auto scroll to feedback on mobile
+            setTimeout(() => {
+                feedbackContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        function showExplanation() {
+            const q = questions[currentQuestionIndex];
+            const modal = document.getElementById('explanation-modal');
+            const content = document.getElementById('explanation-content');
+            
+            content.innerHTML = `
+                <div class="mb-3">
+                    <span class="inline-block px-3 py-1 bg-zinc-800 text-xs rounded-xl text-zinc-400">הסבר לשאלה #${q.id}</span>
+                </div>
+                <p class="leading-relaxed">${q.explanation}</p>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function hideExplanation() {
+            const modal = document.getElementById('explanation-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showEndScreen();
+            }
+        }
+
+        function showEndScreen() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            const total = questions.length;
+            const percentage = Math.round((score / total) * 100);
+            
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('final-total').textContent = total;
+            document.getElementById('correct-count').textContent = score;
+            document.getElementById('wrong-count').textContent = total - score;
+            document.getElementById('accuracy').textContent = percentage + '%';
+            
+            const percEl = document.getElementById('score-percentage');
+            if (percentage >= 80) {
+                percEl.innerHTML = `<span class="text-emerald-400">${percentage}% - מצוין!</span>`;
+                percEl.className = `inline-flex items-center px-5 py-1.5 rounded-2xl text-lg font-semibold bg-emerald-950 border border-emerald-700`;
+            } else if (percentage >= 60) {
+                percEl.innerHTML = `<span class="text-amber-400">${percentage}% - טוב</span>`;
+                percEl.className = `inline-flex items-center px-5 py-1.5 rounded-2xl text-lg font-semibold bg-amber-950 border border-amber-700`;
+            } else {
+                percEl.innerHTML = `<span class="text-red-400">${percentage}% - צריך שיפור</span>`;
+                percEl.className = `inline-flex items-center px-5 py-1.5 rounded-2xl text-lg font-semibold bg-red-950 border border-red-700`;
+            }
+        }
+
+        function showReview() {
+            const wrongAnswers = userAnswers.filter(a => !a.isCorrect);
+            
+            if (wrongAnswers.length === 0) {
+                alert('כל הכבוד! ענית נכון על כל השאלות!');
+                return;
+            }
+            
+            let reviewHTML = `<div class="text-right space-y-4">`;
+            
+            wrongAnswers.forEach((ans, idx) => {
+                reviewHTML += `
+                    <div class="bg-zinc-800 border border-zinc-700 rounded-2xl p-5">
+                        <div class="flex items-start gap-3">
+                            <div class="text-red-400 mt-1"><i class="fa-solid fa-times-circle"></i></div>
+                            <div class="flex-1">
+                                <div class="font-medium text-sm text-zinc-400 mb-1">#${ans.questionId}</div>
+                                <div class="font-semibold mb-3">${ans.question}</div>
+                                
+                                <div class="text-sm">
+                                    <span class="text-red-400">ענית:</span> <span class="font-medium">${ans.selected}</span><br>
+                                    <span class="text-emerald-400">התשובה הנכונה:</span> <span class="font-medium">${ans.correct}) ${ans.correctText}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            reviewHTML += `</div>`;
+            
+            const modal = document.getElementById('explanation-modal');
+            const content = document.getElementById('explanation-content');
+            
+            content.innerHTML = `
+                <div class="mb-4">
+                    <span class="font-bold text-xl">סקירת תשובות שגויות</span>
+                    <span class="text-sm text-zinc-400 block mt-1">(${wrongAnswers.length} שאלות)</span>
+                </div>
+                ${reviewHTML}
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function restartQuiz() {
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('quiz-screen').classList.contains('hidden')) return;
+            
+            const options = document.querySelectorAll('#options-container button');
+            if (!options.length || currentQuestionAnswered) return;
+            
+            if (e.key === '1' || e.key === 'א') options[0]?.click();
+            if (e.key === '2' || e.key === 'ב') options[1]?.click();
+            if (e.key === '3' || e.key === 'ג') options[2]?.click();
+            if (e.key === '4' || e.key === 'ד') options[3]?.click();
+            
+            if (e.key === 'Enter' || e.key === ' ') {
+                const nextBtn = document.querySelector('#feedback-container button[onclick*="nextQuestion"]');
+                if (nextBtn && !nextBtn.disabled) nextBtn.click();
+            }
+        });
+
+        // Initialize
+        function init() {
+            initializeTailwind();
+            document.getElementById('total-q').textContent = questions.length;
+            
+            // Easter egg - click logo to restart
+            const logo = document.querySelector('.fa-shield-halved');
+            if (logo) {
+                logo.style.cursor = 'pointer';
+                logo.onclick = () => {
+                    if (!document.getElementById('start-screen').classList.contains('hidden')) {
+                        startQuiz();
+                    }
+                };
+            }
+            
+            console.log('%c[Cyber Quiz] Interactive quiz initialized with ' + questions.length + ' questions from official file.', 'color:#64748b');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
